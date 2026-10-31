@@ -1,0 +1,38 @@
+<mujoco model="so101_vrl_pick">
+  <!-- Dedicated Vision-RL Simulation Scene (Keeps baseline scene.xml untouched) -->
+  <!-- Located in assets/so101_convert/ so meshdir="meshes" resolves cleanly -->
+  <include file="so101.xml"/>
+
+  <worldbody>
+    <!-- Overhead Top-down Camera for Vision-RL Policy (64x64, pointing straight down at table center) -->
+    <camera name="overhead_cam" pos="0.20 0.00 0.55" xyaxes="0 1 0 -1 0 0" fovy="60"/>
+
+    <!-- Work table -->
+    <body name="table" pos="0 0 0">
+      <geom name="table_top" type="box" size="0.40 0.30 0.025" pos="0 0 -0.025"
+            rgba="0.68 0.90 0.62 1" contype="1" conaffinity="1" condim="3"/>
+      <geom name="table_leg_fl" type="box" size="0.025 0.025 0.325" pos="-0.35 -0.25 -0.375" rgba="0.45 0.27 0.14 1"/>
+      <geom name="table_leg_fr" type="box" size="0.025 0.025 0.325" pos="0.35 -0.25 -0.375" rgba="0.45 0.27 0.14 1"/>
+      <geom name="table_leg_bl" type="box" size="0.025 0.025 0.325" pos="-0.35 0.25 -0.375" rgba="0.45 0.27 0.14 1"/>
+      <geom name="table_leg_br" type="box" size="0.025 0.025 0.325" pos="0.35 0.25 -0.375" rgba="0.45 0.27 0.14 1"/>
+    </body>
+
+    <!-- Cube to pick: 2 cm edge, 20 g, at (0.20, 0.00) -->
+    <body name="cube" pos="0.20 0 0.01">
+      <freejoint name="cube_free"/>
+      <geom name="cube_geom" type="box" size="0.01 0.01 0.01" mass="0.02"
+            rgba="0.9 0.2 0.2 1" contype="1" conaffinity="1"
+            condim="4" friction="1.2 0.02 0.002" solref="0.002 1"/>
+    </body>
+
+    <!-- Target / Box reference: (0.18, 0.08) matching config.pick.box_center -->
+    <body name="box" pos="0.18 0.08 0">
+      <geom name="box_floor" type="box" size="0.045 0.045 0.0025" pos="0 0 0.0025" rgba="0.2 0.4 0.9 1"/>
+      <geom name="box_wall_px" type="box" size="0.0025 0.045 0.015" pos=" 0.0425 0 0.015" rgba="0.2 0.4 0.9 1"/>
+      <geom name="box_wall_nx" type="box" size="0.0025 0.045 0.015" pos="-0.0425 0 0.015" rgba="0.2 0.4 0.9 1"/>
+      <geom name="box_wall_py" type="box" size="0.045 0.0025 0.015" pos="0  0.0425 0.015" rgba="0.2 0.4 0.9 1"/>
+      <geom name="box_wall_ny" type="box" size="0.045 0.0025 0.015" pos="0 -0.0425 0.015" rgba="0.2 0.4 0.9 1"/>
+    </body>
+  </worldbody>
+</mujoco>
+
